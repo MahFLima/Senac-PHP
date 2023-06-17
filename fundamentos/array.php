@@ -30,6 +30,8 @@
       margin-bottom: 1rem;
     }
 
+
+
     .subtitle {
       font-size: 1.5rem;
       font-weight: 600;
