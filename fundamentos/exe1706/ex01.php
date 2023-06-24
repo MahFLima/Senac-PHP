@@ -17,7 +17,7 @@
 			$numero = $_POST["numero"];
 		}
 		?>
-		<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+		<form method="POST">
 
 			<label for="numero">Digite um numero:</label>
 			<input type="number" id="numero" name="numero">
