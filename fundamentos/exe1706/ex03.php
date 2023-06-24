@@ -5,9 +5,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
   <title>Document</title>
 </head>
 
@@ -24,109 +23,108 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      font-family: "Poppins", sans-serif;
+    }
+
+    nav {
+      width: 100%;
     }
 
     form {
-      color: white;
-      margin-top: 2rem;
       width: 500px;
-      padding: 2rem;
-      background: blueviolet;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      border-radius: 2rem;
+      background: #DCE9E2;
+      padding: 1rem;
+      margin-top: 2rem;
+      border-radius: 1rem;
     }
 
-    label{
-      font-size: 1.5rem;
-    }
-    
-    h2{
-      margin: 2rem 0;
-    }
-
-    p{
-      margin-bottom: 0.5rem;
-    }
-
-    input{
-      width: 100%;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 0.5rem;
-    }
-
-    input[type=submit] {
-      width: 6.25rem;
-      border-radius: 4px;
-      background: green;
-      color: white;
+    ul{
       margin-top: 1rem;
     }
   </style>
-  
+
   <?php
   $nome = "";
   $n1 = "";
   $n2 = "";
   $n3 = "";
-  $notas = ["","",""];
+  $notas = ["", "", ""];
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome = $_POST["nome"];
     $n1 = $_POST["n1"];
     $n2 = $_POST["n2"];
     $n3 = $_POST["n3"];
-    
+
     $notas = array($n1, $n2, $n3);
   }
   ?>
 
-  <div class="container">
+
+  <!-- <div class="form-floating">
+      <input type="email" class="form-control" id="floatingInputGrid" placeholder="name@example.com" value="mdo@example.com">
+      <label for="floatingInputGrid">Email address</label>
+  </div> -->
+
+  <nav class="navbar bg-body-tertiary">
+    <div class="container">
+      <a class="nav-link" href="index.php">
+        HOME
+      </a>
+    </div>
+  </nav>
+
+  <div>
     <form method="POST">
-      <label for="nome">Nome:</label>
-      <input type="text" id="nome" name="nome">
+      <div class="mb-3">
+        <label for="nome" class="form-label">Nome:</label>
+        <input type="text" id="nome" name="nome" class="form-control">
+      </div>
 
-      <label for="n1">Nota 1</label>
-      <input type="number" id="n1" name="n1" required>
+      <div class="mb-3">
+        <label for="n1" class="form-label">Nota 1</label>
+        <input type="number" id="n1" name="n1" required class="form-control">
+      </div>
 
-      <label for="n2">Nota 2</label>
-      <input type="number" id="n2" name="n2" required>
+      <div class="mb-3">
+        <label for="n2" class="form-label">Nota 2</label>
+        <input type="number" id="n2" name="n2" required class="form-control">
+      </div>
 
-      <label for="n3">Nota 3</label>
-      <input type="number" id="n3" name="n3" required>
+      <div class="mb-3">
+        <label for="n3" class="form-label">Nota 3</label>
+        <input type="number" id="n3" name="n3" required class="form-control">
+      </div>
 
-      <input type="submit" value="Enviar">
+      <input type="submit" value="Enviar" class="btn btn-success">
     </form>
 
-    <h2>Dados do Formulário:</h2>
-    <p>Nome:
-      <?php echo $nome; ?>
-    </p>
-    <p>Nota 1:
-      <?php echo $notas[0]; ?>
-    </p>
-    <p>Nota 2:
-      <?php echo $notas[1];?>
-    </p>
-    <p>Nota 3:
-      <?php echo $notas[2];?>
-    </p>
-    <p>Media:
-      <?php
-      $media = (floatval($n1) + floatval($n2) + floatval($n3)) / 3;      
+    <ul class="list-group">
+      <li class="list-group-item">Nome:
+        <?php echo $nome; ?>
+      </li>
+      <li class="list-group-item">Nota 1:
+        <?php echo $notas[0]; ?>
+      </li>
+      <li class="list-group-item">Nota 2:
+        <?php echo $notas[1]; ?>
+      </li>
+      <li class="list-group-item">Nota 3:
+        <?php echo $notas[2]; ?>
+      </li>
+      <li class="list-group-item">Media:
+        <?php
+        $media = round((floatval($n1) + floatval($n2) + floatval($n3)) / 3, 2);
 
-      if($media >= 7){
-        echo $media, " (Parabens, você passou)";
-      } elseif($media < 6){
-        echo $media, " (Infelizmente, você reprovou)";
-      } else {
-        echo number_format($media,2), " (Prepare-se, você está de recuperação)";
-      }
-      ?>
-    </p>
+        if ($media >= 7) {
+          echo $media, " (Parabens, você passou)";
+        } elseif ($media < 6) {
+          echo $media, " (Infelizmente, você reprovou)";
+        } else {
+          echo $media, " (Prepare-se, você está de recuperação)";
+        }
+        ?>
+      </li>
+    </ul>
   </div>
 
 </body>
