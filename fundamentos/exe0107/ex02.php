@@ -3,21 +3,22 @@ $cod = "";
 $total = 0;
 $result = "";
 
-function formatValue($valor) {
+function formatValue($valor)
+{
 	$valorString = strval($valor); // converte o valor para uma string
 	$posicaoVirgula = strpos($valorString, '.'); // encontra a posição da vírgula
-	
+
 	if ($posicaoVirgula === false) {
-			return $valorString .",00";
+		return $valorString . ",00";
 	} else {
-			$parteDecimal = substr($valorString, $posicaoVirgula + 1); // obtém a parte decimal após a vírgula
-			
-			if (intval($parteDecimal) > 0) {
-					$decimal = intval($parteDecimal) / 100;
-					return round($valor, 2);
-			} else {
-				return $valorString;
-			}
+		$parteDecimal = substr($valorString, $posicaoVirgula + 1); // obtém a parte decimal após a vírgula
+
+		if (intval($parteDecimal) > 0) {
+			$decimal = intval($parteDecimal) / 100;
+			return round($valor, 2);
+		} else {
+			return $valorString;
+		}
 	}
 }
 
@@ -49,36 +50,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-	<title>Document</title>
+	<link rel="stylesheet" href="style.css">
+	<title>Exercicio 2</title>
 </head>
 
 <body>
-	<style>
-		* {
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-		}
+	<nav class="navbar bg-body-tertiary">
+		<div class="container">
+			<a class="nav-link" href="index.php">
+				HOME
+			</a>
+		</div>
+	</nav>
 
-		body {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			gap: 2rem;
-		}
-
-		nav {
-			width: 100%;
-		}
-
-		form {
-			width: 100%;
-			max-width: 500px;
-			margin-top: 2rem;
-		}
-	</style>
-
-	<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+	<form method="POST">
 		<div class="mb-3">
 			<label for="total" class="form-label">Total da Compra:</label>
 			<input type="text" id="total" name="total" class="form-control" placeholder="ex: 10.99">
@@ -92,9 +77,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				<option value="3">Cliente Vip (5% de desconto)</option>
 			</select>
 		</div>
-		<button type="submit" class="btn btn-primary">Submit</button>
-		<?php echo $result?>
+		<button type="submit" class="btn btn-primary">Calcular Desconto</button>
 	</form>
+	<ul class="list-group">
+		<li class="list-group-item"> Resultado: <?php echo $result ?></li>
+	</ul>
 </body>
 
 </html>

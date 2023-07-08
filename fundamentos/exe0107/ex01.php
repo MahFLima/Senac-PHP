@@ -1,39 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-	<title>Document</title>
-</head>
-
-<body>
-	<style>
-		* {
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-		}
-
-		body {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			gap: 2rem;
-		}
-
-		nav {
-			width: 100%;
-		}
-
-		form {
-			width: 100%;
-			max-width: 500px;
-			margin-top: 2rem;
-		}
-	</style>
-	<?php
+<?php
 	$math = "";
 	$v1 = 0;
 	$v2 = 0;
@@ -62,9 +27,30 @@
 				break;
 		}
 	}
-	?>
+?>
 
-	<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+	<link rel="stylesheet" href="style.css">
+	<title>Exercicio 1</title>
+</head>
+
+<body>
+
+	<nav class="navbar bg-body-tertiary">
+		<div class="container">
+			<a class="nav-link" href="index.php">
+				HOME
+			</a>
+		</div>
+	</nav>
+
+	<form method="POST">
 		<div class="mb-3">
 			<label for="v1" class="form-label">Informe o primeiro valor:</label>
 			<input type="text" id="v1" name="v1" class="form-control">
@@ -74,21 +60,24 @@
 			<input type="text" id="v2" name="v2" class="form-control">
 		</div>
 		<div class="mb-3">
-			<label for="disabledSelect" class="form-label">Defina o operação</label>
+			<label for="disabledSelect" class="form-label">Defina a operação matemática</label>
 			<select id="disabledSelect" class="form-select" name="math">
+				<option value="" disabled>Escolha uma operação matemática:</option>
 				<option>soma</option>
 				<option>subtração</option>
 				<option>multiplicação</option>
 				<option>divisão</option>
 			</select>
 		</div>
-		<button type="submit" class="btn btn-primary">Submit</button>
+		<button type="submit" class="btn btn-primary">Calcular</button>
 	</form>
 
+	<ul class="list-group">
+		<li class="list-group-item d-inline-flex row-gap-3">Resultado: <?php echo $result; ?></li>
+	</ul>
+
 	<?php
-	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		echo $result;
-	}
+	
 	?>
 </body>
 
