@@ -46,7 +46,7 @@ function countNumber($item)
 			<label for="value" class="form-label">Informe um numero inteiro:</label>
 			<input type="text" id="" name="value" class="form-control">
 		</div>
-		<button type="submit" class="btn btn-primary">Submit</button>
+		<button type="submit" class="btn btn-primary">Iniciar Contagem</button>
 	</form>
 	<ul class="list-group">
 		<li class="list-group-item d-inline-flex row-gap-3">Contagem: <?php echo countNumber($count) ?></li>

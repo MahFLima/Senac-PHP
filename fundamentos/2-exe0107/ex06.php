@@ -1,27 +1,24 @@
 <?php
-$x = 5;
+$v1 = 0;
+$v2 = 0;
 $count = [];
-$y = 1;
 
-function countNumber($arrayN)
+function countNumber($item)
 {
-    foreach ($arrayN as $i) {
-        echo $i . " * ";
+    foreach ($item as $num) {
+        echo $num . "\n";
     }
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $x = $_POST["value"];
+    $v1 = $_POST["v1"];
+    $v2 = $_POST["v2"];
 
-    for ($i = $x; $i > 0; $i--) {
+    for ($i = $v1 + 1; $i < $v2; $i++) {
         array_push($count, $i);
     }
-
-    // 7 6 5 4 3 2 1
-    foreach ($count as $i) {
-        $y = $i * $y;
-    }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -36,7 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-
     <nav class="navbar bg-body-tertiary">
         <div class="container">
             <a class="nav-link" href="index.php">
@@ -47,13 +43,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <form method="POST">
         <div class="mb-3">
-            <label for="value" class="form-label">Informe um valor inteiro:</label>
-            <input type="text" id="value" name="value" class="form-control">
+            <label for="v1" class="form-label">Inicio da contagem:</label>
+            <input type="text" id="v1" name="v1" class="form-control">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="mb-3">
+            <label for="v2" class="form-label">Fim da contagem:</label>
+            <input type="text" id="v2" name="v2" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Iniciar</button>
     </form>
     <ul class="list-group">
-        <li class="list-group-item d-inline-flex row-gap-3">Fatorial: <?php echo countNumber($count) . " = " . $y ?></li>
+        <li class="list-group-item d-inline-flex row-gap-3">Contagem: <?php echo countNumber($count) ?></li>
     </ul>
 
 </body>
