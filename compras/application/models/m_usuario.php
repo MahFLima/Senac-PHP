@@ -13,7 +13,7 @@ class m_usuario extends CI_Model
         $retorno = $this->db->query("select * from usuarios where usuario = '$usuario'");
 
         if ($retorno->num_rows() > 0) {
-            $dados = array('codigo' => 6, 'msg' => 'Usuário já existe');
+            $dados = array('codigo' => 7, 'msg' => 'Usuário já existe');
         } else {
             $user->db->query("insert into usuarios (usuario, senha, nome, tipo)
             values('$usuario', md5('$senha'), '$nome', '$tipo_usuario')");
@@ -46,8 +46,46 @@ class m_usuario extends CI_Model
         if ($this->db->affected_rows() > 0) {
             $dados = array('codigo' => 1,'msg' => 'Senha atualizada com sucesso');
         } else {
-            $dados = array('codigo' => 6,'msg' => 'Houve algum problema na atualização da senha');
+            $dados = array('codigo' => 5,'msg' => 'Houve algum problema na atualização da senha');
         }
+        return $dados;
+    }
+
+    public function consultar($usuario, $nome, $tipo_usuario){
+        $sql = "select * from usuarios where state = '' ";
+
+        if(trim($usuario) != ''){
+            $sql = $sql . "and usuario = '$usuario' ";
+        }
+
+        if(trim($tipo_usuario) != ''){
+            $sql = $sql . "and tipo = '$tipo_usuario' ";
+        }
+
+        if(trim($nome) != ''){
+            $sql = $sql . "and nome like '%$nome%' ";
+        }
+
+        $retorno = $this->db->query($sql);
+
+        if($retorno->num_rows() > 0){
+            $dados = array('codigo' => 1, 'msg' => 'Consulta efetuada com sucesso', 'dados' => $retorno->result());
+        } else {
+            $dados = array('codigo' => 6, 'msg' => "Dados não encontrados");
+        }
+
+        return $dados;
+    }
+
+    public function alterar($usuario, $nome, $senha, $tipo_usuario){
+        $this->db->query("update usuarios set nome = '$nome', tipo = '$tipo_usuario' where usuario = '$usuario' and senha = '$senha' ");
+
+        if($this->db->affected_rows() > 0){
+            $dados = array('codigo' => 1, 'msg' => 'Usuario atualizado corretamente');
+        } else {
+            $dados = array('codigo' => 6, 'msg' => 'Houve algum problema na atualização na tabela usuarios');
+        }
+
         return $dados;
     }
 
