@@ -115,5 +115,39 @@
 
             echo json_encode($retorno);
         }
+
+        public function desativar(){
+            $json = file_get_contents('php://input');
+            $resultado = json_decode($json);
+
+            $usuario = $resultado->usuario;
+
+            if(trim($usuario == '')){
+                $retorno = array('codigo' => 2, 'msg' => 'Usuario não informado');
+            } else  {
+                $this->load->model('m_usuario');
+
+                $retorno = $this->m_usuario->desativar($usuario);
+            }
+
+            echo json_encode($retorno);
+        }
+
+        public function ativar(){
+            $json = file_get_contents('php://input');
+            $resultado = json_decode($json);
+
+            $usuario = $resultado->usuario;
+
+            if(trim($usuario == '')){
+                $retorno = array('codigo' => 2, 'msg' => 'Usuario não informado');
+            } else  {
+                $this->load->model('m_usuario');
+
+                $retorno = $this->m_usuario->ativar($usuario);
+            }
+
+            echo json_encode($retorno);
+        }
     }
 ?>
