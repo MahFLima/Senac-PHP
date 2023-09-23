@@ -4,22 +4,34 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class m_usuario extends CI_Model
 {
 
-    public function inserir($usuario, $senha, $nome, $tipo_usuario)
+    public function inserir($usuario, $senha, $nome, $tipo_usuario, $usu_sistema)
     {
         // $this->db->query("insert into usuarios (usuario, senha, nome, tipo)
         // values('$usuario', md5('$senha)', '$nome', '$tipo_usuario')");
-        $user = $this;
 
         $retorno = $this->db->query("select * from usuarios where usuario = '$usuario'");
 
         if ($retorno->num_rows() > 0) {
             $dados = array('codigo' => 7, 'msg' => 'Usuário já existe');
         } else {
-            $this->db->query("insert into usuarios (usuario, senha, nome, tipo)
-            values('$usuario', md5('$senha'), '$nome', '$tipo_usuario')");
+            $sql = "insert into usuarios (usuario, senha, nome, tipo)
+            values('$usuario', md5('$senha'), '$nome', '$tipo_usuario')";
+            
+            $this->db->query($sql);
 
             if ($this->db->affected_rows() > 0) {
-                $dados = array('codigo' => 1, 'msg' => 'Usuario cadastrado corretamente');
+                
+                //chama
+                $this->load->model('m_log');
+
+                $retorno_log = $this->m_log->inserir_log($usu_sistema, $sql);
+
+                if($retorno_log['codigo'] == 1){
+                    $dados = array('codigo' => 1, 'msg' => 'Usuario cadastrado corretamente');
+                } else {
+                    $dados = array('codigo' => 9, 'msg' => 'Houve algum problema no salvamento do Log, porem, usuário cadastrado corretamente');
+                }
+                
             } else {
                 $dados = array('codigo' => 6, 'msg' => 'Houve algum problema na inserção na tabela de usuários');
             }

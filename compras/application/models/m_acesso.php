@@ -8,7 +8,7 @@
             if($retorno->num_rows() > 0){
                 $dados = array('codigo' => 1, 'msg' => 'Usuario Correto');
             } else {
-                $dados = array('codigo' => 4, 'msg' => 'Usuario não encontrado');
+                $dados = array('codigo' => 4, 'msg' => 'Usuario ou senha errados');
             }
 
             return $dados;

@@ -96,3 +96,27 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+
+//Conexão default, seria o banco de produção de nosso projeto
+$db['log'] = array(
+	'dsn'	   => 'DB_Log', //Nome da conexão
+	'hostname' => 'bqbydwthqohygqqhu0yr-mysql.services.clever-cloud.com',  //Servidor onde está o banco de dados
+	'username' => 'u08tjsz4ta87cpn4', //Usuário do banco de dados
+	'password' => 'Pkcm4gzyySLgb0mze05n', //Caso possua, a senha do banco de dados
+	'database' => 'bqbydwthqohygqqhu0yr', //Nome do banco de dados criado
+	'dbdriver' => 'mysqli', //Driver do banco de dados, iremos utilizar esse por estarmos 
+	                        //trabalhando com o Banco MySQL
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => (ENVIRONMENT !== 'production'),
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
+	'save_queries' => TRUE
+);

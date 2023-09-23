@@ -12,7 +12,12 @@
             $nome = $resultado->nome;
             $tipo_usuario = strtoupper($resultado->tipo_usuario);
 
-            if(trim($usuario) == ''){
+            $usu_sistema = strtoupper($resultado->usu_sistema);
+
+            if(trim($usu_sistema) == ''){
+                $retorno = array('codigo' => 8, 'msg' => 'Usuario do sistema não informado');
+            }
+            elseif(trim($usuario) == ''){
                 $retorno = array('codigo' => 2, 'msg' => 'Usuario não informado');
             } elseif(trim($senha) == ''){
                 $retorno = array('codigo' => 3, 'msg' => 'Senha não informada');
@@ -25,7 +30,7 @@
             } else {
                 $this->load->model('m_usuario');
 
-                $retorno = $this->m_usuario->inserir($usuario, $senha, $nome, $tipo_usuario);
+                $retorno = $this->m_usuario->inserir($usuario, $senha, $nome, $tipo_usuario, $usu_sistema);
             }
 
             echo json_encode($retorno);
