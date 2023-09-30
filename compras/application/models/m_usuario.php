@@ -91,7 +91,7 @@ class m_usuario extends CI_Model
         return $dados;
     }
 
-    public function alterar($usuario, $nome, $senha, $tipo_usuario)
+    public function alterar($usuario, $nome, $senha, $tipo_usuario, $usu_sistema)
     {
         
         //verifica se usuario existe 
@@ -106,10 +106,20 @@ class m_usuario extends CI_Model
                 $dados = array('codigo' => 6, 'msg' => 'Não foi possível fazer a atualização pois o usuário foi DELETADO');
                 
             } else {
-                
-                $this->db->query("update usuarios set nome = '$nome', tipo = '$tipo_usuario' where usuario = '$usuario' and senha = md5('$senha') ");
+                $sql = "update usuarios set nome = '$nome', tipo = '$tipo_usuario' where usuario = '$usuario' and senha = md5('$senha') ";
+
+                $this->db->query($sql);
+
                 if($this->db->affected_rows() > 0) {
-                    $dados = array('codigo' => 1, 'msg' => "Usuário ATUALIZADO com sucesso");
+
+                    $this->load->model('m_log');
+                    $retorno_log = $this->m_log->inserir_log($usu_sistema, $sql);
+
+                    if($retorno_log['codigo'] == 1){
+                        $dados = array('codigo' => 1, 'msg' => "Usuário ATUALIZADO com sucesso");
+                    } else {
+                        $dados = array('codigo' => 4, 'msg' => 'Houve algum problema no salvamento do Log, porem, usuário ATUALIZADO corretamente');
+                    }
                 }else{
                     $dados = array ('codigo' => 8, 'msg' => "Houve um problema durante atualização"); 
                 }
@@ -162,27 +172,49 @@ class m_usuario extends CI_Model
     // }  
 
 
-    public function desativar($usuario)
+    public function desativar($usuario, $usu_sistema)
     {
-        $this->db->query("update usuarios set state = 'D' where usuario = '$usuario'");
+        $sql = "update usuarios set state = 'D' where usuario = '$usuario'";
+
+        $this->db->query($sql);
 
         if ($this->db->affected_rows() > 0) {
-            $dados = array('codigo' => 1, 'msg' => 'Usuario desativado corretamente');
+
+            $this->load->model('m_log');
+            $retorno_log = $this->m_log->inserir_log($usu_sistema, $sql);
+
+            if($retorno_log['codigo'] == 1){
+                $dados = array('codigo' => 1, 'msg' => 'Usuario desativado corretamente');
+            } else {
+                $dados = array('codigo' => 4, 'msg' => 'Houve algum problema no salvamento do Log, porem, usuário desativado corretamente');
+            }
+            
         } else {
-            $dados = array('codigo' => 6, 'msg' => 'Houve algum problema na desativação do usuario');
+            $dados = array('codigo' => 5, 'msg' => 'Houve algum problema na desativação do usuario');
         }
 
         return $dados;
     }
 
-    public function ativar($usuario)
+    public function ativar($usuario, $usu_sistema)
     {
-        $this->db->query("update usuarios set state = '' where usuario = '$usuario'");
+        $sql = "update usuarios set state = '' where usuario = '$usuario'";
+
+        $this->db->query($sql);
 
         if ($this->db->affected_rows() > 0) {
-            $dados = array('codigo' => 1, 'msg' => 'Usuario ativado corretamente');
+
+            $this->load->model('m_log');
+            $retorno_log = $this->m_log->inserir_log($usu_sistema, $sql);
+
+            if($retorno_log['codigo'] == 1){
+                $dados = array('codigo' => 1, 'msg' => 'Usuario ativado corretamente');
+            } else {
+                $dados = array('codigo' => 4, 'msg' => 'Houve algum problema no salvamento do Log, porem, usuário ativado corretamente');
+            }
+            
         } else {
-            $dados = array('codigo' => 6, 'msg' => 'Houve algum problema na ativação do usuario');
+            $dados = array('codigo' => 5, 'msg' => 'Houve algum problema na ativação do usuario');
         }
 
         return $dados;

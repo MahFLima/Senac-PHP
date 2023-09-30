@@ -104,18 +104,22 @@
             $nome = $resultado->nome;
             $tipo_usuario = strtoupper($resultado->tipo_usuario);
 
-            if(trim($tipo_usuario) != 'ADMINISTRADOR' && trim($tipo_usuario) != 'COMUM' && trim($tipo_usuario) != ''){
-                $retorno = array('codigo' => 5, 'msg' => 'Tipo de usuário invalido');
+            $usu_sistema = strtoupper($resultado->usu_sistema);
+
+            if($usu_sistema == ''){
+                $retorno = array('codigo' => 2, 'msg' => 'Usuario do sistema não informado');
+            } elseif(trim($tipo_usuario) != 'ADMINISTRADOR' && trim($tipo_usuario) != 'COMUM' && trim($tipo_usuario) != ''){
+                $retorno = array('codigo' => 6, 'msg' => 'Tipo de usuário invalido');
             } elseif(trim($nome) == ''){
                 $retorno = array('codigo' => 3, 'msg' => 'Nome não informado');
             } elseif(trim($usuario) == ''){
-                $retorno = array('codigo' => 2, 'msg' => 'Usuario não informada');
+                $retorno = array('codigo' => 4, 'msg' => 'Usuario não informada');
             } elseif(trim($senha) == ''){
-                $retorno = array('codigo' => 4, 'msg' => 'Senha não informada');
+                $retorno = array('codigo' => 5, 'msg' => 'Senha não informada');
             } else {
                 $this->load->model('m_usuario');
 
-                $retorno = $this->m_usuario->alterar($usuario, $nome, $senha, $tipo_usuario);
+                $retorno = $this->m_usuario->alterar($usuario, $nome, $senha, $tipo_usuario, $usu_sistema);
             }
 
             echo json_encode($retorno);
@@ -126,13 +130,16 @@
             $resultado = json_decode($json);
 
             $usuario = $resultado->usuario;
+            $usu_sistema = strtoupper($resultado->usu_sistema);
 
-            if(trim($usuario == '')){
-                $retorno = array('codigo' => 2, 'msg' => 'Usuario não informado');
+            if($usu_sistema == ''){
+                $retorno = array('codigo' => 2, 'msg' => 'Usuario do sistema não informado');
+            }elseif(trim($usuario == '')){
+                $retorno = array('codigo' => 3, 'msg' => 'Usuario não informado');
             } else  {
                 $this->load->model('m_usuario');
 
-                $retorno = $this->m_usuario->desativar($usuario);
+                $retorno = $this->m_usuario->desativar($usuario, $usu_sistema);
             }
 
             echo json_encode($retorno);
@@ -143,13 +150,16 @@
             $resultado = json_decode($json);
 
             $usuario = $resultado->usuario;
+            $usu_sistema = strtoupper($resultado->usu_sistema);
 
-            if(trim($usuario == '')){
-                $retorno = array('codigo' => 2, 'msg' => 'Usuario não informado');
+            if($usu_sistema == ''){
+                $retorno = array('codigo' => 2, 'msg' => 'Usuario do sistema não informado');
+            }elseif(trim($usuario == '')){
+                $retorno = array('codigo' => 3, 'msg' => 'Usuario não informado');
             } else  {
                 $this->load->model('m_usuario');
 
-                $retorno = $this->m_usuario->ativar($usuario);
+                $retorno = $this->m_usuario->ativar($usuario, $usu_sistema);
             }
 
             echo json_encode($retorno);
